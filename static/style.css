@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: black url("butterfly_background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(0,0,0,0.7);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links a {
+    color: white;
+    margin-left: 25px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.container {
+    margin-top: 120px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 8px #444;
+}
+
+form input[type="file"] {
+    padding: 10px;
+    margin: 15px 0;
+    background: #fff;
+    color: black;
+    border-radius: 5px;
+    border: none;
+}
+
+form button {
+    background: #fff;
+    color: black;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: #ddd;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    transition: transform 1s ease-in-out;
+}
+
+.rotate {
+    animation: rotateLogo 1s linear infinite;
+}
+
+@keyframes rotateLogo {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+#loader {
+    display: none;
+    margin: 30px auto;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #555;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.facts {
+    margin-top: 50px;
+    padding: 20px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 12px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.facts p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+

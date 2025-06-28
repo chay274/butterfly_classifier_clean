@@ -1,0 +1,32 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# macOS system files
+.DS_Store
+
+# Virtual environments
+env/
+venv/
+
+# Dataset folders (local-only — not needed for deploy)
+dataset/
+
+# Ignore all model files except butterfly_model_v1.h5
+*.h5
+!butterfly_model_v1.h5
+
+# Static uploads folder
+static/uploads/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Log files
+*.log
+
+# OS swap files
+*.swp
+
