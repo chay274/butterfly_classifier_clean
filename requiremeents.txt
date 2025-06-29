@@ -1,0 +1,7 @@
+Flask==3.0.3
+tensorflow==2.18.0
+numpy
+pillow
+gdown
+Werkzeug
+
