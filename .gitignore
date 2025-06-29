@@ -1,15 +1,1 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.DS_Store
-env/
-venv/
-dataset/
 *.h5
-!butterfly_model_v1.h5
-static/uploads/
-.ipynb_checkpoints/
-*.log
-*.swp
-
