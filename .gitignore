@@ -1,10 +1,7 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
 env/
 dataset/
-static/uploads/
-model/*.h5
+*.h5
+__pycache__/
+*.pyc
 .DS_Store
-*.log
+static/uploads/
