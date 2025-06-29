@@ -5,3 +5,8 @@ numpy
 pillow
 gunicorn
 
+tensorflow==2.17.1
+numpy
+Pillow
+h5py
+gdown

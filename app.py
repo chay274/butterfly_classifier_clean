@@ -88,4 +88,69 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+import os
+from flask import Flask, request, render_template, redirect
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+import numpy as np
+import json
+import gdown
+
+app = Flask(__name__)
+app.config["UPLOAD_FOLDER"] = "static/uploads"
+
+# Paths
+MODEL_PATH = "model/butterfly_model.h5"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn"
+
+# Download model if not exists
+if not os.path.exists(MODEL_PATH):
+    os.makedirs("model", exist_ok=True)
+    print("📥 Downloading model from Google Drive...")
+    gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+print("✅ Model loaded successfully.")
+
+# Load model
+model = load_model(MODEL_PATH)
+
+# Load class indices
+with open("class_indices.json") as f:
+    class_indices = json.load(f)
+labels = [label for label, idx in sorted(class_indices.items(), key=lambda x: x[1])]
+
+# Home page route
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+# Predict route
+@app.route("/predict", methods=["POST"])
+def predict():
+    if "file" not in request.files:
+        return redirect(request.url)
+    file = request.files["file"]
+    if file.filename == "":
+        return redirect(request.url)
+
+    if file:
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+        file.save(filepath)
+
+        img = image.load_img(filepath, target_size=(224, 224))
+        img_array = image.img_to_array(img)
+        img_array = np.expand_dims(img_array, axis=0) / 255.0
+
+        preds = model.predict(img_array)[0]
+        predicted_index = np.argmax(preds)
+        predicted_species = labels[predicted_index]
+        confidence = round(preds[predicted_index] * 100, 2)
+
+        return render_template("result.html",
+                               prediction=predicted_species,
+                               confidence=confidence,
+                               uploaded_filename=file.filename)
+    return redirect("/")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
 
