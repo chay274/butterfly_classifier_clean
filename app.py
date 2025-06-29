@@ -14,13 +14,13 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Google Drive file download link
-MODEL_URL = "https://drive.usercontent.google.com/download?id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn&export=download"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn"
 MODEL_PATH = "butterfly_model_v1.h5"
 
 # Download model if not present
 if not os.path.exists(MODEL_PATH):
     print("📥 Downloading model from Google Drive...")
-    gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+    gdown.download(MODEL_URL, MODEL_PATH, fuzzy=True, quiet=False)
     print("✅ Download complete.")
 
 # Load the trained model
