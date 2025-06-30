@@ -3,6 +3,11 @@ services:
     name: butterfly-classifier
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:10000 app:app
+    envVars:
+      - key: PORT
+        value: 10000
 
