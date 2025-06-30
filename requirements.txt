@@ -1,9 +1,9 @@
-Flask>=3.0.0
+Flask==3.0.0
 tensorflow==2.17.1
-keras==2.13.1
 gdown
 numpy
 pillow
 gunicorn
 h5py
+keras==2.13.1
 
