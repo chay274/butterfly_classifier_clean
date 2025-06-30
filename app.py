@@ -18,7 +18,8 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Google Drive model download link
 MODEL_URL = "https://drive.google.com/uc?export=download&id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn"
-MODEL_PATH = "butterfly_model_v1.h5"
+MODEL_PATH = "butterfly_model_v1.keras"
+model = load_model(MODEL_PATH)
 
 # Download model if not present
 if not os.path.exists(MODEL_PATH):

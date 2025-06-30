@@ -1,9 +1,8 @@
-Flask
-tensorflow-cpu==2.15.0
-keras==2.15.0
-gdown
-numpy
-pillow
+tensorflow==2.18.0
+keras==3.10.0
+flask
 gunicorn
-h5py
+numpy
+gdown
+Pillow
 
