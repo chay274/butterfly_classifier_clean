@@ -1,11 +1,11 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
-import os
+from werkzeug.utils import secure_filename
 import gdown
 
 # Initialize Flask app
@@ -16,22 +16,7 @@ UPLOAD_FOLDER = os.path.join("static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Google Drive file download link
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn"
-MODEL_PATH = "butterfly_model_v1.h5"
-
-# Download model if not present
-if not os.path.exists(MODEL_PATH):
-    print("📥 Downloading model from Google Drive...")
-    if not os.path.exists(MODEL_PATH):   
-    gdown.download(MODEL_URL, MODEL_PATH, fuzzy=True, quiet=False)
-    print("✅ Download complete.")
-
-# Load the trained model
-model = load_model(MODEL_PATH)
-print("✅ Model loaded successfully.")
-
-# Load class labels
+# Labels
 labels = [
     "ADONIS", "AFRICAN GIANT SWALLOWTAIL", "AMERICAN SNOOT", "AN 88", "APPOLLO",
     "ARCIGERA FLOWER MOTH", "ATALA", "ATLAS MOTH", "BANDED ORANGE HELICONIAN",
@@ -45,7 +30,7 @@ labels = [
     "EMPEROR GUM MOTH", "GARDEN TIGER MOTH", "GIANT LEOPARD MOTH", "GLITTERING SAPPHIRE",
     "GOLD BANDED", "GREAT EGGFLY", "GREAT JAY", "GREEN CELLED CATTLEHEART", "GREEN HAIRSTREAK",
     "GREY HAIRSTREAK", "HERCULES MOTH", "HUMMING BIRD HAWK MOTH", "INDRA SWALLOW", "IO MOTH",
-    "Iphiclus sister", "JULIA", "LARGE MARBLE", "LUNA MOTH", "MADAGASCAN SUNSET MOTH", "MALACHITE",
+    "JULIA", "LARGE MARBLE", "LUNA MOTH", "MADAGASCAN SUNSET MOTH", "MALACHITE",
     "MANGROVE SKIPPER", "MESTRA", "METALMARK", "MILBERTS TORTOISESHELL", "MOURNING CLOAK",
     "Monarch", "OLEANDER HAWK MOTH", "ORANGE OAKLEAF", "ORANGE TIP", "ORCHARD SWALLOW",
     "PAINTED LADY", "PAPER KITE", "PEACOCK", "PINE WHITE", "PIPEVINE SWALLOW", "POLYPHEMUS MOTH",
@@ -57,8 +42,21 @@ labels = [
     "ZEBRA LONG WING"
 ]
 
-from werkzeug.utils import secure_filename
+# Model download URL and local path
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn"
+MODEL_PATH = "butterfly_model_v1.h5"
 
+# Download model if not present
+if not os.path.exists(MODEL_PATH):
+    print("📥 Downloading model from Google Drive...")
+    gdown.download(MODEL_URL, MODEL_PATH, fuzzy=True, quiet=False)
+    print("✅ Download complete.")
+
+# Load trained model
+model = load_model(MODEL_PATH)
+print("✅ Model loaded successfully.")
+
+# Routes
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -75,7 +73,7 @@ def predict():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
 
-        # Preprocess the image
+        # Preprocess image
         img = image.load_img(file_path, target_size=(224, 224))
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
@@ -85,11 +83,11 @@ def predict():
         preds = model.predict(img_array)
         predicted_class = labels[np.argmax(preds)]
 
-        return render_template('result.html',
-                               prediction=predicted_class,
-                               uploaded_filename=filename)
+        return render_template('result.html', prediction=predicted_class, uploaded_filename=filename)
+
     return redirect('/')
 
+# Run app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
 
