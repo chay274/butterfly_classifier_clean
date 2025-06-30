@@ -23,6 +23,7 @@ MODEL_PATH = "butterfly_model_v1.h5"
 # Download model if not present
 if not os.path.exists(MODEL_PATH):
     print("📥 Downloading model from Google Drive...")
+    if not os.path.exists(MODEL_PATH):   
     gdown.download(MODEL_URL, MODEL_PATH, fuzzy=True, quiet=False)
     print("✅ Download complete.")
 

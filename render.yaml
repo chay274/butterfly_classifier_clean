@@ -1,6 +1,8 @@
 services:
   - type: web
     name: butterfly-classifier
-    env: docker
+    env: python
     plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
 
