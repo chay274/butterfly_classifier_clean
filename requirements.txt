@@ -1,9 +1,9 @@
 Flask
 tensorflow-cpu==2.15.0
+keras==2.15.0
 gdown
 numpy
 pillow
 gunicorn
 h5py
-keras==2.15.0
 
