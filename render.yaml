@@ -1,12 +1,7 @@
-services:
-  - type: web
-    name: butterfly-classifier
-    env: python
-    plan: free
-    buildCommand: |
-      pip install --upgrade pip
-      pip install -r requirements.txt
-    startCommand: gunicorn --bind 0.0.0.0:10000 app:app
-    envVars:
-      - key: PORT
-        value: 10000
+tensorflow==2.15.0
+keras==3.0.5
+flask
+gunicorn
+numpy
+gdown
+Pillow
