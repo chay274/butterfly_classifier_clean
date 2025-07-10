@@ -26,11 +26,11 @@ if not os.path.exists(MODEL_PATH):
     gdown.download(MODEL_URL, MODEL_PATH, fuzzy=True, quiet=False)
     print("✅ Download complete.")
 
-# Load trained model
+# Now safe to load the model after download
 model = load_model(MODEL_PATH)
 print("✅ Model loaded successfully.")
 
-# Load class labels (replace this with your full label list)
+# Load class labels (replace this with your full list)
 labels = [
     "ADONIS",
     "AFRICAN GIANT SWALLOWTAIL",
