@@ -16,10 +16,9 @@ UPLOAD_FOLDER = os.path.join("static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Google Drive model download link
+# Model download URL and path
 MODEL_URL = "https://drive.google.com/uc?export=download&id=1wBwrM4--8IeIcoyM9b_K8m2gUDEeQDvn"
 MODEL_PATH = "butterfly_model_v1.keras"
-model = load_model(MODEL_PATH)
 
 # Download model if not present
 if not os.path.exists(MODEL_PATH):
@@ -31,8 +30,14 @@ if not os.path.exists(MODEL_PATH):
 model = load_model(MODEL_PATH)
 print("✅ Model loaded successfully.")
 
-# Load class labels
-labels = [ "ADONIS", "AFRICAN GIANT SWALLOWTAIL", "AMERICAN SNOOT", "AN 88", "APPOLLO" ]  # short list — replace with full
+# Load class labels (replace this with your full label list)
+labels = [
+    "ADONIS",
+    "AFRICAN GIANT SWALLOWTAIL",
+    "AMERICAN SNOOT",
+    "AN 88",
+    "APPOLLO"
+]
 
 @app.route('/')
 def index():
@@ -65,4 +70,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
-
